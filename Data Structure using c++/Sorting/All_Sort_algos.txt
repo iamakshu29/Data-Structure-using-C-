@@ -1,0 +1,251 @@
+#include<iostream>
+#include<iomanip>
+
+using namespace std;
+
+void Bubble_sort(int a[],int n);
+void Insertion_sort(int a[],int n);
+void Selection_sort(int a[],int n);
+int part(int a[], int l, int h);
+void Quick(int a[], int l, int h);
+
+void IMergeSort(int A[],int n);
+void Merge(int A[],int l,int mid,int h);
+
+int max(int a[5]);
+void count(int a[5]);
+
+
+void ShellSort(int A[],int n);
+
+int main()
+{
+//    int a[] = {8,5,7,3,2};
+//    cout << "Unsorted elements are: 8,5,7,3,2 " << endl;
+    //Bubble_sort(a,5);
+    //Insertion_sort(a,5);
+    //Selection_sort(a,5);
+    //Quick(a,0,5);
+    //ShellSort(a,5);
+//    count(a);
+//    cout << "Sorted Elements are: " ;
+//    for(int i{0};i<5;i++)
+//        cout << a[i] <<" ";
+
+//For merge sort only
+//        int b[]={11,13,7,12,16,9,24,5,10,3},n=10,i;
+//        IMergeSort(b,n);
+//        for(i=0;i<10;i++)
+//        cout << b[i] << endl;
+//For merge sort only
+
+
+
+
+
+
+
+    return 0;
+}
+
+void Bubble_sort(int a[],int n)
+{
+    int flag;
+    for(int i{0};i<n-1;i++)//No of passes is 1 less than the element
+        {
+            flag = 0;
+            for(int j{0};j<n-1-i;j++)// no of comparison decreases by 1 as elements get sorted in each pass.....
+                {
+                    if(a[j]>a[j+1])
+                    {
+                         swap(a[j],a[j+1]);
+                         flag = 1;
+                    }
+
+                }
+                if(flag==0)// this is used to check id array is already sorted or not;
+                    break;// if sorted then break after comes out of 2nd loop
+        }
+}
+
+void Insertion_sort(int a[],int n)
+{
+    int j{0};
+    for(int i=1;i<5;i++)// pass is 1 less than the total element but in this sort pass is 1 less from starting and that's y i=1 not 0
+    {
+        int x = a[i];
+        j = i-1;// same reason above as the pass start from 1 so the element form which the i has to compared is on the left side of the element acc to array
+        // we assume that our array start from that place where we have the sortable elemenet which is i...
+        while(j>-1 && a[j]>x)
+            {
+                a[j+1] = a[j];
+                j--;
+            }
+        a[j+1] = x;
+    }
+}
+
+
+void Selection_sort(int a[],int n)
+{
+    int i,j,k;
+    for(i=0;i<n-1;i++)
+    {
+        // same logic ith for loop................
+        //for(j = k = i;j<n;j++)
+        //{
+          //  if(a[k]>a[j])
+            //   {
+              //   k = j;
+               //}
+        //}
+        //end........................................
+        j = k = i;
+        while(j<n)
+        {
+            if(a[k]>a[j])
+                 k = j;
+            j++;
+        }
+       swap(a[i],a[k]);
+    }
+}
+
+//QuickSort----------------------------------------------------------
+int part(int a[], int l, int h)
+{
+    int i=l;
+    int j=h;
+    int pivot = a[l];
+    while(a[i]<=a[l])
+        i++;
+    while(a[j]>a[l])
+        j--;
+    if(i<j)swap(a[i],a[j]);
+    else
+        swap(a[l],a[j]);
+    return j;
+}
+void Quick(int a[], int l, int h)
+{
+    int j;
+    if(l < h)// this checks that array has atleast 2 elements
+    {
+        j = part(a,l,h);
+        Quick(a,l,j-1);
+        Quick(a,j+1,h);
+    }
+}
+
+//QuickSort----------------------------------------------------------
+
+//Merge sort-----------------------------------------------------------
+
+void Merge(int A[],int l,int mid,int h)
+{
+    int i=l,j=mid+1,k=l;
+    int B[100];
+
+    while(i<=mid && j<=h)
+    {
+        if(A[i]<A[j])
+            B[k++]=A[i++];
+        else
+        B[k++]=A[j++];
+    }
+
+    while(i<=mid)
+        B[k++]=A[i++];
+    while(j<=h)
+        B[k++]=A[j++];
+
+    for(i=l;i<=h;i++)
+        A[i]=B[i];//elementd copied back to array A after merging 
+}
+
+void IMergeSort(int A[],int n)
+{
+    int p,l,h,mid,i;
+
+    for(p=2;p<=n;p=p*2)
+    {
+        for(i=0;i+p-1<n;i=i+p)
+        {
+            l=i;
+            h=i+p-1;
+            mid=(l+h)/2;
+            Merge(A,l,mid,h);
+        }
+    }
+        if(p/2<n) // for odd no of elements...
+            Merge(A,0,p/2-1,n-1);
+}
+//Merge sort-----------------------------------------------------------
+
+// count sort----------------------------------------------------------
+int max(int a[5])
+{
+    int max{0};
+    for(int i=0;i<5;i++)
+    {
+        if(a[i]>max)
+        {
+            max = a[i];
+        }
+    }
+
+    return max;
+}
+
+
+void count(int a[5])
+{
+    int j=0,i=0;
+    int max_ele = max(a);
+    int *b;
+    b = new int[max_ele+1];
+
+    for(j=0;j<max_ele+1;j++)
+    b[j] = 0;
+	//	OR
+	//YOU JUST DO int b[max_ele+1]{} // this single line is cover upper two lines
+    for(i=0;i<5;i++)
+    b[a[i]]++;
+
+    i=0;j=0;
+    while(j<max_ele+1)
+    {
+        if(b[j] > 0)
+        {
+            a[i++] = j;
+            b[j]--;
+        }
+        else
+            j++;
+    }
+}
+
+// count sort----------------------------------------------------------
+
+//SHELL SORT---------------
+// same logic like insertion sort but only difference is
+//it loop in gap not linerly
+void ShellSort(int A[],int n)
+{
+    int gap,i,j,temp;
+    for(gap=n/2;gap>=1;gap/=2)// this is the online line that differ from the insertion sort algo
+	//else all is similar below this
+    {
+        for(i=gap;i<n;i++)//in insertiion i=1 here is gap (only change + extra loop reason)..
+        {
+            temp=A[i];
+            j=i-gap;
+        while(j>=0 && A[j]>temp)
+        {
+            A[j+gap]=A[j];
+	    j=j-gap;
+	}
+    	    A[j+gap]=temp;
+	}
+    }
+}

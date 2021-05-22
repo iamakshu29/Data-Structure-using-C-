@@ -1,0 +1,64 @@
+#include<iostream>
+
+using namespace std;
+
+class node
+{
+public:
+    int data;
+    node *next;
+
+};
+
+class Linkedlist
+{
+private:
+    node *first;
+    node *last;
+
+public:
+    Linkedlist()
+    {
+        first = nullptr;
+        last = nullptr;
+
+    }
+
+    node* get_first(){return first;}
+
+     void create_for_circular(int a[],int n)
+    {
+        node *t;
+        first = new node;
+        first->data = a[0];
+        first->next = nullptr;
+        last = first;
+        for(int i=1;i<n;i++)
+        {
+            t = new node;
+            t->data = a[i];
+            t->next = first;
+            last->next = t;
+            last = t;
+        }
+    }
+     void display_for_circular(node *p)
+    {
+       do
+        {
+            cout << p->data << endl;
+            p = p->next;
+        }while(p!=first);
+
+    }
+};
+    
+    int main()
+{
+    Linkedlist l;
+    int a[]{1,2,3,4,5};
+    l.create_for_circular(a,5);
+    l.display_for_circular(l.get_first());
+    
+    return 0;
+}

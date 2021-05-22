@@ -1,0 +1,38 @@
+#include<iostream>
+
+using namespace std;
+
+void Merge_using_2_array(int [] ,int [] ,int []);
+
+int main()
+{
+    int a[] = {2,10,18,20,23};
+    int b[] = {4,9,19,25};
+    int c[10];
+    
+    Merge_using_2_array(a,b,c);
+cout << "merged array is: " << endl;
+    for(int k=0;k<9;k++)
+    cout << c[k] << endl;
+    
+    return 0;
+}
+
+void Merge_using_2_array(int a[], int b[], int c[])
+{
+    int i{0},j{0},k{0};
+   
+   while(i<5 && j<4)
+    {
+        if(a[i]<b[j])
+        c[k++] = a[i++];
+        else
+        c[k++] = b[j++];
+    }
+    
+    while(i<5)
+        c[k++] = a[i++];
+    while(j<4)
+        c[k++] = b[j++];
+
+}

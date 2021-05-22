@@ -1,0 +1,107 @@
+#include<iostream>
+
+using namespace std;
+
+class node
+{
+public:
+    int data;
+    node *next;
+};
+class Queue
+{
+private:
+    node *Front;
+    node *Rear;
+public:
+        Queue()
+        {
+            Front = nullptr;
+            Rear = nullptr;
+        }
+    void enqueue(int x);
+    void dequeue();
+    int isEmpty();
+    int isFull();
+    void Display();
+};
+void Queue::enqueue(int x)
+{
+    node *t = new node;
+    t->data = x;
+    t->next = nullptr;
+    if(t == nullptr)
+        cout << "Queue is Full: " << endl;
+    else
+    {
+        if(Front == nullptr)
+            {
+                Front = Rear = t;
+            }
+        else
+        {
+            Rear->next = t;
+            Rear = t;
+        }
+    }
+}
+
+void Queue::dequeue()
+{
+    int x{0};
+    if(Front == nullptr)
+        cout << "Queue is Empty: " << endl;
+    else
+    {
+        node *t = Front;
+        x = t->data;
+        Front = Front->next;
+        free(t);
+        cout << "Deleted element is: " << x << endl;
+    }
+}
+
+int Queue::isEmpty()
+{
+    if(Front == nullptr)
+        return 1;
+    else
+        return 0;
+}
+
+int Queue::isFull()
+{
+    node *t = new node;
+    if(t == nullptr)
+        return 1;
+    else
+        return 0;
+}
+
+void Queue::Display()
+{
+    node *p = Front;
+    while(p!=nullptr)
+    {
+        cout << p->data << endl;
+        p = p->next;
+    }
+}
+
+int main()
+{
+    Queue q;
+    cout << q.isEmpty() << endl;
+    q.enqueue(12);
+    q.enqueue(13);
+    q.enqueue(14);
+    q.enqueue(15);
+    q.enqueue(16);
+    q.enqueue(17);
+    q.Display();
+    q.dequeue();
+    q.dequeue();
+    q.Display();
+
+    return 0;
+}

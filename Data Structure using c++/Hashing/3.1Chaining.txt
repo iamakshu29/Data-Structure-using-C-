@@ -1,0 +1,106 @@
+#include<iostream>
+
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+};
+
+class LinkedList
+{
+private:
+   Node *first,*last;
+public:
+    LinkedList()
+    {
+        first = nullptr;
+        last = nullptr;
+    }
+
+    void SortedInsert(Node **H,int x)
+    {
+        Node *t,*q=NULL,*p=*H;
+        t= new Node;
+        t->data=x;
+        t->next=NULL;
+        if(*H==NULL)
+            *H=t;
+        else
+        {
+            while(p && p->data<x)
+            {
+                q=p;
+                p=p->next;
+            }
+            if(p==*H)
+            {
+                t->next=*H;
+                *H=t;
+            }
+            else
+            {
+                t->next=q->next;
+                q->next=t;
+            }
+        }
+    }
+
+    Node* Search(Node *p, int key)
+    {
+        while(p!=nullptr)
+        {
+            if(key == p->data)
+                {
+                    return p;
+                }
+            else
+                {
+                    p = p->next;
+                }
+
+        }
+        return NULL;
+    }
+
+    Node* GET()
+	{
+	  return first;
+	}
+
+};
+
+    int Hash(int key)
+    {
+        return key%10;
+    }
+    void Insert(Node *H[],int key)
+    {
+        LinkedList a;
+        int index= Hash(key);
+        a.SortedInsert(&H[index],key);
+    }
+
+int main(){
+   LinkedList a;
+ Node *HT[10];// hash array
+ Node *temp;
+ int i{0};
+ for(i=0;i<10;i++)
+    HT[i]=NULL;
+
+ Insert(HT,12);
+ Insert(HT,22);
+ Insert(HT,42);
+
+ // for ssearch
+ temp=a.Search(HT[Hash(22)],22);
+ // gives run time error if the element is not present in hash table
+ // use below search for run time error as 21 is not in hash table
+//temp=a.Search(HT[Hash(21)],21);
+ cout << temp->data;
+
+return 0;
+}

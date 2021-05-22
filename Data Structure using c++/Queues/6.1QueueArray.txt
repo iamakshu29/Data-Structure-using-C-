@@ -1,0 +1,96 @@
+#include<iostream>
+
+using namespace std;
+
+class Queue
+{
+private:
+    int Size;
+    int Rear;
+    int Front;
+    int *a;
+
+public:
+    Queue()
+    {
+        Size = 10;
+        Rear = -1;
+        Front = -1;
+        a = new int[Size];
+    }
+    Queue(int siz)
+    {
+        Size = siz;
+        Rear = -1;
+        Front = -1;
+        a = new int[siz];
+    }
+    void enqueue(int x);
+    void dequeue();
+    int isEmpty();
+    int isFull();
+    void Display();
+};
+void Queue::enqueue(int x)
+    {
+        if(Rear == Size-1)
+            cout << "Queue is full: " << endl;
+        else
+        {
+            Rear++;
+            a[Rear] = x;
+         //   cout << x << endl;
+        }
+
+    }
+
+void Queue::dequeue()
+    {
+        if(Front == Rear)
+            cout << "Queue is Empty: " << endl;
+        else
+        {
+            int x = a[Front+1];
+	    Front++;
+            cout << "Deleted element is: " << x << endl;
+        }
+    }
+
+int Queue::isEmpty()
+    {
+        if(Front == Rear)
+            return 1;
+        else
+            return 0;
+    }
+
+int Queue::isFull()
+    {
+        if(Rear == Size-1)
+            return 1;
+        else
+            return 0;
+    }
+
+void Queue::Display()
+    {
+        cout << "Let us display the queue: " << endl;
+        for(int i=Front+1;i<=Rear;i++)
+            cout << a[i] << endl;
+    }
+
+int main()
+{
+    Queue q; // here size of a[] is 10 because of default constructor
+    cout << q.isEmpty() << endl;
+    q.enqueue(12);
+    q.enqueue(13);
+    q.enqueue(14);
+    q.enqueue(15);
+    q.Display();
+    q.dequeue();
+    q.dequeue();
+    q.Display();
+
+    return 0;
+}

@@ -1,0 +1,113 @@
+#include<iostream>
+
+using namespace std;
+
+class Stack
+{
+private :
+    int size;
+    int top;
+    int *s;
+public:
+    Stack()
+    {
+        size = 10;
+        top = -1;
+        s = new int[size];
+    }
+
+    Stack(int siz)
+    {
+        size = siz;
+        top = -1;
+        s = new int[siz];
+    }
+
+    void push(int x);
+    void pop();
+    int isEmpty();
+    int isFull();
+    void stack_Top();
+    void display();
+    void peek(int pos);
+};
+
+void Stack::push(int x)
+{
+    if(top == size-1)
+        cout << "stack is full: " << endl;
+    else
+    {
+         top++;
+         s[top] = x;
+    }
+    //cout << x << endl;
+}
+void Stack::pop()
+{
+    int x{0};
+    if(top == -1)
+        cout << "Stack is empty: " << endl;
+    else
+    {
+        x = s[top];
+        top--;
+    }
+    cout << "Popped element is: " << x << endl;
+}
+int Stack::isEmpty()
+{
+    if(top == -1)
+        return 1;
+    else
+        return 0;
+}
+int Stack::isFull()
+{
+    if(top == size-1)
+        return 1;
+    else
+        return 0;
+}
+void Stack::stack_Top()
+{
+    if(top == -1)
+        cout << "oops its empty: " << endl;
+    else
+        cout << "Top of element is: " << s[top] << endl;
+}
+void Stack::display()
+{
+    if(top == -1)
+        cout << "its empty cannot display any element: " << endl;
+    else
+    {
+        cout << "elements in stack form are: " << endl;
+        for(int i=top;i>=0;i--)
+        cout << s[i] << endl;
+    }
+}
+void Stack::peek(int pos)
+{
+    if(top-pos+1 < 0)
+        cout << "Invalid Position: " <<endl;
+    else
+    {
+        cout << "element at position: " << pos << " is " <<  s[top-pos+1] << endl;
+    }
+}
+int main()
+{
+    Stack st;
+    st.push(10);
+    st.push(20);
+    st.push(30);
+    st.push(40);
+    st.push(50);
+    st.display();
+    st.pop();
+    st.display();
+    st.peek(4);
+//cout << st.isEmpty() << endl;
+//st.stack_Top();
+}

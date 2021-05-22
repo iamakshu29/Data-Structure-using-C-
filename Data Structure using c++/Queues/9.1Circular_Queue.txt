@@ -1,0 +1,98 @@
+#include<iostream>
+
+using namespace std;
+
+class Circular_Queue
+{
+private:
+    int Size;
+    int Rear;
+    int Front;
+    int *a;
+
+public:
+    Circular_Queue()
+    {
+        Size = 10;
+        Rear = -1;
+        Front = -1;
+        a = new int[Size];
+    }
+    Circular_Queue(int siz)
+    {
+        Size = siz;
+        Rear = -1;
+        Front = -1;
+        a = new int[siz];
+    }
+    void enqueue(int x);
+    void dequeue();
+    int isEmpty();
+    int isFull();
+    void Display();
+};
+void Circular_Queue::enqueue(int x)
+    {
+        if((Rear+1)%Size == Front)
+            cout << "Circular Queue is full: " << endl;
+        else
+        {
+            Rear = (Rear+1)%Size;
+            a[Rear] = x;
+         //   cout << x << endl;
+        }
+
+    }
+
+void Circular_Queue::dequeue()
+    {
+        if(Front == Rear)
+            cout << "Circular Queue is Empty: " << endl;
+        else
+        {
+            int x = a[(Front+1)%Size];
+            Front++;
+            cout << "Deleted element is: " << x << endl;
+        }
+    }
+
+int Circular_Queue::isEmpty()
+    {
+        if(Front == Rear)
+            return 1;
+        else
+            return 0;
+    }
+
+int Circular_Queue::isFull()
+    {
+        if(Rear == Size-1)
+            return 1;
+        else
+            return 0;
+    }
+
+void Circular_Queue::Display()
+    {
+        cout << "Let us display the queue: " << endl;
+        for(int i=Front+1;i<=Rear;i++)
+            cout << a[i] << endl;
+    }
+
+int main()
+{
+    Circular_Queue q(3); // here size of a[] is 10 because of default constructor
+    cout << q.isEmpty() << endl;
+    q.enqueue(12);
+    q.enqueue(13);
+    q.enqueue(14);
+//    q.enqueue(15);
+//    q.enqueue(16);
+//    q.enqueue(17);
+    q.Display();
+    q.dequeue();
+    q.dequeue();
+    q.Display();
+
+    return 0;
+}

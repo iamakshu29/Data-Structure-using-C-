@@ -1,0 +1,179 @@
+#include<iostream>
+
+using namespace std;
+
+class node
+{
+public:
+    int data;
+    node *left;
+    node *right;
+};
+
+class Tree
+{
+private:
+    node *root;
+public:
+    Tree()
+    {
+        root = nullptr;
+    }
+    void Insert(int x)
+    {
+        node *t = root;
+        node *p,*r;
+        if(root == nullptr)
+        {
+            p = new node;
+            p->data =x;
+            p->left = p->right = nullptr;
+            root = p;
+            return;
+        }
+        while(t!=nullptr)
+        {
+            r = t;
+            if(x < t->data)
+                t = t->left;
+            else if(x > t->data)
+                t = t->right;
+            else
+                return;
+        }
+        p = new node;
+        p->data = x;
+        p->left = p->right = nullptr;
+
+        if(p->data < r->data)
+            r->left = p;
+        else
+            r->right = p;
+    }
+
+    void Inorder(node *p)
+    {
+        if(p!=nullptr)
+        {
+            Inorder(p->left);
+            cout << p->data << " " ;
+            Inorder(p->right);
+        }
+    }
+
+    void Search(node *p,int x)
+    {
+        while(p!=nullptr)
+            {
+                if(x == p->data)
+                {
+                    cout << "found at: " << p << endl;
+                    break;
+                }
+                else if(x < p->data)
+                    p = p->left;
+                else
+                    p =p->right;
+            }
+        if(p==nullptr)
+            cout << "not found : " << endl;
+
+    }
+
+   int height(node *p)
+   {
+       int x{0},y{0};
+       if(p==nullptr)
+        return 0;
+       else
+       {
+           x = height(p->left);
+           y = height(p->right);
+       }
+       if(x>y)
+       return x+1;
+       return y+1;
+   }
+
+   node *predecessor(node *p)
+   {
+       while(p == nullptr && p->left!=nullptr)
+       {
+           p = p->left;
+       }
+       return p;
+   }
+
+   node *successor(node *p)
+   {
+       while(p == nullptr && p->right!=nullptr)
+       {
+           p = p->right;
+       }
+       return p;
+   }
+
+   node *Delete(node *p,int x)
+   {
+       node *q;
+       if(root == nullptr)
+        return 0;
+       if(p->left==nullptr && p->right==nullptr)
+       {
+           if(p == root)
+            root = nullptr;
+           free(p);
+           return 0;
+       }
+           if(x > p->data)
+            p->right = Delete(p->right,x);
+           else if(x < p->data)
+            p->left = Delete(p->left,x);
+           else
+        {
+            if(height(p->left)>height(p->right))
+            {
+               q = predecessor(p->left);
+               p->data = q->data;
+               p->left = Delete(p->left,q->data);
+            }
+            else
+                {
+                    q=successor(p->right);
+                    p->data=q->data;
+                    p->right = Delete(p->right,q->data);
+                }
+            return p;
+        }
+   }
+
+
+    node * get_root()
+    {
+        return root;
+    }
+
+
+};
+
+int main()
+{
+    Tree t;
+    t.Insert(40);
+    t.Insert(20);
+    t.Insert(60);
+    t.Insert(10);
+    t.Insert(50);
+    t.Insert(30);
+    t.Insert(70);
+    t.Inorder(t.get_root());
+cout << endl;
+    t.Delete(t.get_root(),50);
+    t.Inorder(t.get_root());
+cout << endl;
+    t.Search(t.get_root(),40);
+
+    cout << t.height(t.get_root());
+	return 0;
+
+}

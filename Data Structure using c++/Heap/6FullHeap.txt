@@ -1,0 +1,85 @@
+#include<iostream>
+
+using namespace std;
+
+
+void Insert(int a[],int n);
+void create();
+int Delete(int a[],int n);
+void delete_1(int a[],int n);
+
+int main()
+{
+// if we have to insert an element like 60 then all other element should
+// be inserted acc to the max/ min heap tree logic........
+    int a[] = {30,20,15,5,10,12,60};
+    Insert(a,6);
+    for(int i=0;i<7;i++)
+        cout << a[i] << " ";
+
+    cout << "\nDeleted value is: " << Delete(a,6) << endl;
+        for(int i=0;i<7;i++)
+            cout << a[i] << " ";
+
+        cout << "\nCreating Heap with new array elements: " << endl;
+    create();
+
+
+
+}
+
+void Insert(int a[],int n)
+{
+    int temp,i{0};
+    i = n;
+    temp = a[i];
+    while(i>0 && temp > a[(i)/2])
+    {
+            a[i] = a[(i)/2];
+            i = (i)/2;
+    }
+    a[i] = temp;
+}
+
+void create()
+{
+    // here we use i = 1 bcoz 1st element which is at index 0 is always at
+    // right place because it is first so insertion logic starts from
+    // i=1..........
+    int b[] = {10,20,30,25,5,40,35};
+    for(int i=1;i<7;i++)
+        Insert(b,i);
+    for(int i=0;i<7;i++)
+        cout << b[i] << " ";
+}
+// in heap tree only root is deleted and the deleted ele when stored in
+// an array they sorted automatically and sort is known as heap sort..........
+int Delete(int a[],int n)
+{
+  int i,j,x,val;
+  val = a[0];// deleted value
+  x = a[n];
+  a[0] = a[n];
+  a[n] = val;
+  // if u take i =0 then j = 2i+1 if i =1 j = 2i but eventually answer will be same even if j = 2i at i=0
+  i=0;j=(i*2);
+  while(j<n-1)// when 1 element from array is deleted then size remains n-1 and j will run upto that n-1
+  {
+      if(a[j+1]>a[j]) //  used to compare the both the children of root node
+        j = j+1; // if right child is big then j = j+1 else j = j remains same
+      if(a[i]<a[j])// used to compare the root and the bigger children..
+      {
+          int temp;
+          temp = a[i];
+          a[i] = a[j];
+          a[j] = temp;
+          i=j;
+          j = 2*j;
+      }
+      else
+        break;
+  }
+  return val;
+}
+
+

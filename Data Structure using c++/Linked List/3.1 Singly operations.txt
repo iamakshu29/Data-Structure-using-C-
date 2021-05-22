@@ -1,0 +1,150 @@
+#include<iostream>
+
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+};
+
+class LinkedList
+{
+private:
+   Node *first,*last;
+public:
+    LinkedList()
+    {
+        first = nullptr;
+        last = nullptr;
+    }
+
+    void create(int b[],int n)
+    {
+        Node *t=nullptr;
+        first = new Node;
+        first->data = b[0];
+        first->next = nullptr;
+        last = first;
+
+        for(int i=1;i<n;i++)
+        {
+            t = new Node;
+            t->data = b[i];
+            t->next = nullptr;
+            last->next = t;
+            last = t;
+        }
+    }
+    void display()
+    {
+        Node *p = first;
+        cout << "elements are: " << endl;
+        while(p!=nullptr)
+        {
+            cout << p->data <<endl;
+            p = p->next;
+        }
+    }
+
+    void Count()
+    {
+        Node *p = first;
+        int count{0};
+        cout << "no of elements are : " << endl;
+        while(p!=nullptr)
+        {
+            count++;
+            p = p->next;
+        }
+        cout << count << endl;
+    }
+    int MAX()
+    {
+        Node *p = first;
+        int max{0};
+        max = 0;
+        cout << "Maximum element is : " << endl;
+        while(p!=nullptr)
+        {
+            if(max < p->data)
+                max = p->data;
+            p = p->next;
+        }
+        return max;
+    }
+    int Total()
+    {
+        Node *p = first;
+        int sum{0};
+        cout << "sum of element of linked list is : " << endl;
+        while(p)
+        {
+            sum = sum + p->data;
+            p = p->next;
+        }
+        return sum;
+    }
+// we use return type as Node* because we will return the address of pointer p whose data type is Node...
+    Node* Search(Node *p, int key)
+    {
+//        Node *p = first;
+//        int key{0};
+//        cout << "Enter the element u want to search: " << endl;
+//        cin >> key;
+        while(p!=nullptr)
+        {
+            if(key == p->data)
+                {
+                    return p;
+                }
+            else
+                {
+                    p = p->next;
+                }
+
+        }
+        return NULL;
+    }
+    Node* GET()
+	{
+	  return first;
+	}
+
+    Node* improvedsearch(Node *p,int key){
+    Node *q;
+    while(p!=nullptr){
+        if(key == p->data)
+        {
+            q->next = p->next;
+            p->next = first;
+            first = p;
+            return p;
+        }
+        else
+        {
+            q = p;
+            p = p->next;
+        }
+    }
+    }
+
+};
+
+int main(){
+   LinkedList a;
+   int b[] {1,2,3,4,15,6};
+   a.create(b,6);
+   a.display();
+   a.Count();
+   cout << a.MAX() << endl;
+   cout << a.Total() << endl;
+   a.GET();
+   cout << "address of particular element is: " <<  a.Search(a.GET() ,2) << endl;
+   // if u want to access the private element like first from the class then u can use get function and call it in the func u want like in very above line..or u
+   // can make the whole class private
+   cout <<"improved search: " << a.improvedsearch(a.GET(),4) << endl;
+   a.display();
+return 0;
+}

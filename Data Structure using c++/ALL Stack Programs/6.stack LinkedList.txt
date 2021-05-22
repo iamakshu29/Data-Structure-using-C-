@@ -1,0 +1,118 @@
+#include<iostream>
+using namespace std;
+
+class node
+{
+public:
+    int data;
+    node *next;
+};
+
+class Stack
+{
+private:
+    node *top;
+public:
+    Stack()
+    {
+        top = nullptr;
+    }
+    void Push(int x);
+    void Pop();
+    void Display();
+    int isEmpty();
+    int isFull();
+    int Stack_Top();
+    void peek(int pos);
+};
+
+void Stack::Push(int x)
+{
+    node *t;
+    t = new node;
+    if(t == nullptr)
+        cout << "Stack is full can't make a new node: " << endl;
+    else
+    {
+        t->data = x;
+        t->next = top;
+        top = t;
+    }
+}
+void Stack::Pop()
+{
+    if(top == nullptr)
+        cout << "Stack is empty: " << endl;
+    else
+    {
+        node *t;
+        t = top;
+        int x = t->data;
+        top = top->next;
+        free(t);
+        cout << "popped element is: " << x << endl;
+    }
+}
+void Stack::Display()
+{
+        node *p = nullptr;
+        p = top;
+        cout << "Element in stack form: " << endl;
+        while(p!=nullptr)
+        {
+            cout << p->data << endl;
+            p = p->next;
+        }
+}
+int Stack::isEmpty()
+{
+    if(top == nullptr)
+        return 1;
+    else
+        return 0;
+}
+int Stack::isFull()
+{
+    node *t = new node;
+    if(t == nullptr)
+        return 1;
+    else
+        return 0;
+}
+
+int Stack::Stack_Top()
+{
+    if(top==nullptr)
+        return 0;
+    else
+        return top->data;
+}
+
+void Stack::peek(int pos)
+{
+    node *p = top;
+        for(int i=1;i<pos&&p!=nullptr;i++)
+    {
+        p = p->next;
+    }
+    if(p == nullptr)
+        cout << "Invalid position: " << endl;
+    else
+        cout << "Element at position: " << pos << " is " << p->data << endl;
+
+}
+int main()
+{
+    Stack st;
+    st.Push(10);
+    st.Push(20);
+    st.Push(30);
+    st.Display();
+    st.Pop();
+    st.Display();
+    st.peek(2);
+//cout << st.isEmpty() << endl;
+//cout << st.Stack_Top() << endl;
+    return 0;
+}
+

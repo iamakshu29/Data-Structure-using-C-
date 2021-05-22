@@ -1,0 +1,67 @@
+#include<iostream>
+
+using namespace std;
+
+int Hash(int key);
+int probe(int a[], int key);
+void insert(int a[], int key);
+int search(int a[],int key);
+
+int main()
+{
+    int a[10]={0};
+    int ele;
+    insert(a,12);
+    insert(a,25);
+    insert(a,35);
+    insert(a,26);
+
+    cout << "\nKey found at: " << search(a,12) << endl;
+
+    return 0;
+}
+
+int Hash(int key)
+{
+    return key%10;
+}
+
+//int probe(int a[], int key)
+//{
+//    int index = Hash(key);
+//    int y;
+//    int i{0};
+//    while(a[(index+i)%10]!=0)// if the space at the particular index is not equal to 0
+//        i++;// then perform i++
+//    return (index+i)%10;// if the space is zero then return the index
+//}
+
+//void insert(int a[],int key)
+//{
+//    int index = Hash(key);
+//    if(a[index]!=0)
+//        index = probe(a,key);
+//    a[index] = key;
+//}
+
+void insert(int a[], int key)
+{
+    int index = Hash(key);
+    int i{0},ele;
+    if(a[(index+i)%10]!=0)
+        while(a[(index+i)%10]!=0)
+            i++;
+        ele = (index+i)%10;
+    a[ele] = key;
+}
+
+int search(int a[],int key)
+{
+    int index = Hash(key);
+    int i{0};
+    while(a[(index+i)%10]!=key)
+        i++;
+    return (index+i)%10;
+}
+
+

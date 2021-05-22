@@ -1,0 +1,261 @@
+#include<iostream>
+
+using namespace std;
+
+class node
+{
+public:
+    node *left;
+    int   data; // this int data store tree value
+    node *right;
+
+
+    // they both are for queue
+    node *next;
+    node *Data; // this node *Data stores address of node
+     // instead of int Data it becomes node *Data
+    //because this stores the node address in place of int Data
+
+};
+
+class Queue
+{
+public:
+    node *Front;
+    node *Rear;
+        Queue()
+        {
+            Front = nullptr;
+            Rear = nullptr;
+        }
+    void enqueue(node *x); // here also change from int to node *
+    void dequeue();
+    int isEmpty();
+    int isFull();
+
+};
+void Queue::enqueue(node *x)
+{
+    node *t = new node;
+    t->Data = x;
+    t->next = nullptr;
+    if(t == nullptr)
+        cout << "Queue is Full: " << endl;
+    else
+    {
+        if(Front == nullptr)
+            {
+                Front = Rear = t;
+            }
+        else
+        {
+            Rear->next = t;
+            Rear = t;
+        }
+    }
+}
+
+void Queue::dequeue()
+{
+    node *x; // here also change from int to node *
+    if(Front == nullptr)
+        cout << "Queue is Empty: " << endl;
+    else
+    {
+        node *t = Front;
+        x = t->Data;
+        Front = Front->next;
+        free(t);
+       // cout << "Deleted element is: " << x << endl;
+    }
+}
+
+int Queue::isEmpty()
+{
+    if(Front == nullptr)
+        return 1;
+    else
+        return 0;
+}
+
+int Queue::isFull()
+{
+    node *t = new node;
+    if(t == nullptr)
+        return 1;
+    else
+        return 0;
+}
+
+
+
+
+class Tree
+{
+public: // here root pointer points to node datatype is made in public class
+        // so to do the minimum changes we can or make short code....
+    node *root;
+    Tree()
+    {
+        root = nullptr;
+    }
+    void Create_Tree(); // not take any parameter bcoz root is in class
+    void Preorder(node *p);
+    void Postorder(node *p);
+    void Inorder(node *p);
+    void Levelorder(node *p);
+    int height(node *root);
+    int Count(node *root);
+    node* Get_root(){return root;} // this func not need
+                                //see the comments in main function
+};
+
+
+void Tree::Create_Tree()
+{
+    node *p = nullptr;
+    node *t = nullptr;
+    Queue q; // here I didn't take any size it is 10 coz of default constructor
+    int y{0}; // initialize *p,*q,y,Queue q;
+
+    cout << "Enter the root value: " << endl;
+    cin >> y;
+    root = new node;
+    root->left = nullptr;
+    root->data = y;
+    root->right = nullptr;
+    q.enqueue(root);
+
+    while(!q.isEmpty())
+    {
+        p = q.Front->Data;
+        q.dequeue();
+        cout << "Enter the left child of " << p->data << endl;
+        cin >> y;
+        if(y!= -1)
+        {
+            t = new node;
+            t->left = nullptr;
+            t->data = y;
+            t->right = nullptr;
+            p->left = t;
+            q.enqueue(t);
+        }
+
+        cout << "Enter the right child of " << p->data << endl;
+        cin >> y;
+        if(y!= -1)
+        {
+            t = new node;
+            t->left = nullptr;
+            t->data = y;
+            t->right = nullptr;
+            p->right = t;
+            q.enqueue(t);
+        }
+    }
+
+}
+
+void Tree::Preorder(node *p)
+{
+   if(p)
+   {
+       cout << p->data << " " ;
+       Preorder(p->left);
+       Preorder(p->right);
+   }
+}
+
+void Tree::Postorder(node *p)
+{
+   if(p)
+   {
+       Postorder(p->left);
+       Postorder(p->right);
+       cout << p->data << " " ;
+   }
+}
+
+void Tree::Inorder(node *p)
+{
+   if(p)
+   {
+       Inorder(p->left);
+       cout << p->data << " " ;
+       Inorder(p->right);
+   }
+}
+
+void Tree::Levelorder(node *root)
+{
+    Queue q;
+    cout << root->data << endl;
+    q.enqueue(root);
+    while(!q.isEmpty())
+    {
+        root = q.Front->Data;
+        q.dequeue();
+        if(root->left)
+        {
+            cout << root->left->data << endl;
+            q.enqueue(root->left);
+        }
+        if(root->right)
+        {
+            cout << root->right->data << endl;
+            q.enqueue(root->right);
+        }
+    }
+}
+
+int Tree::Count(node *p)
+{
+    int x{0},y{0};
+if(p)
+{
+   x = Count(p->left);
+   y = Count(p->right);
+   return x + y + 1;
+}
+
+return 0;
+}
+
+int Tree::height(node *root)
+{
+int x=0,y=0;
+if(root==0)
+return 0;
+x=height(root->left);
+y=height(root->right);
+if(x>y)
+return x+1;
+else
+return y+1;
+}
+
+int main()
+{
+    Tree t;
+    cout << "Tree is: " << endl;
+    t.Create_Tree();
+    cout << "\nPre order of tree is: " << endl;
+    // no need for t.Get_root()
+    t.Preorder(t.root); // here there is no need to use the get function
+                       // to return the value of root because it is public
+    cout << "\nPost order of tree is: " << endl;
+    t.Postorder(t.root);
+    cout << "\nIn order of tree is: " << endl;
+    t.Inorder(t.root);
+
+    cout << "\nLevel Order of tree is: " << endl;
+    t.Levelorder(t.root);
+
+   cout << "height is : " << t.height(t.root) << endl;
+
+   cout << "count is : " << t.Count(t.root) << endl;
+
+
+    return 0;
+}

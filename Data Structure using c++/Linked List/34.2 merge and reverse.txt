@@ -1,0 +1,156 @@
+#include<iostream>
+
+using namespace std;
+
+class node
+{
+public:
+    int data;
+    node *next;
+
+};
+
+class Linkedlist
+{
+private:
+    node *first;
+    node *last;
+    node *second;
+    node *third;
+public:
+    Linkedlist()
+    {
+        first = nullptr;
+        last = nullptr;
+        second = nullptr;
+        third = nullptr;
+    }
+
+    node* get_first(){return first;}
+
+    void create(int a[],int n)
+    {
+        node *t;
+        first = new node;
+        first->data = a[0];
+        first->next = nullptr;
+        last = first;
+        for(int i=1;i<n;i++)
+        {
+            t = new node;
+            t->data = a[i];
+            t->next = nullptr;
+            last->next = t;
+            last = t;
+        }
+    }
+    void create_2(int b[],int m)
+    {
+        node *t;
+        second = new node;
+        second->data = b[0];
+        second->next = nullptr;
+        last = second;
+        for(int  i=1;i<m;i++)
+        {
+            t= new node;
+            t->data = b[i];
+            t->next = nullptr;
+            last->next = t;
+            last = t;
+        }
+    }
+    node* get_2(){return second;}
+
+    void display(node *p){
+        while(p!=nullptr)
+        {
+            cout << p->data << " ";
+            p = p->next;
+        }
+    }
+
+void reverse(node *p)
+{
+    node *q = nullptr;
+    node *r = nullptr;
+    while(p!=nullptr)
+    {
+        r=q;
+        q=p;
+        p=p->next;
+        q->next = r;
+
+    }
+    first = q;
+}
+
+
+
+ node* get_3(){return third;}
+
+void merged(node *a, node *b)
+{
+    node *last = nullptr;
+   if(a->data < b->data)
+   {
+       third = last = a;
+        a = a->next;
+       last->next = nullptr;
+   }
+   else
+   {
+       third = last = b;
+       b = b->next;
+       last->next = nullptr;
+   }
+   while(a!=nullptr&& b!=nullptr)
+   {
+       if(a->data < b->data)
+       {
+           last -> next  = a;
+           last = a;
+           a = a -> next;
+           last->next = nullptr;
+       }
+       else
+       {
+           last -> next  = b;
+           last = b;
+           b= b -> next;
+           last->next = nullptr;
+       }
+   }
+	if(a!=nullptr)
+       {
+           last -> next = a;
+       }
+       else
+       {
+           last -> next = b;
+       }
+
+}
+};
+
+
+
+int main()
+{
+
+    Linkedlist l;
+    int a[]{12,13,14,20,17};
+    int b[]{18,19,15,21,22};
+    l.create(a,5);
+    l.display(l.get_first());
+    l.create_2(b,5);
+    l.display(l.get_2());
+    //l.reverse(l.get_first());
+    //l.display(l.get_first());
+    l.merged(l.get_first(),l.get_2());
+    l.display(l.get_3());
+
+
+
+    return 0;
+}

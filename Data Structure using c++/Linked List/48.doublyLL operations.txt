@@ -1,0 +1,128 @@
+#include<iostream>
+
+using namespace std;
+
+class node
+{
+public:
+    node *prev;
+    int data;
+    node *next;
+};
+
+class linkedlist
+{
+private:
+    node *first;
+    node *last;
+public:
+    linkedlist()
+    {
+        first = nullptr;
+        last = nullptr;
+    }
+
+void create(int a[],int n)
+{
+    node *p;
+   first = new node;
+   first->prev = nullptr;
+   first->data = a[0];
+   first->next = nullptr;
+   last = first;
+   for(int i=1;i<n;i++)
+   {
+       p = new node;
+       p->prev = nullptr;
+       p->data = a[i];
+       p->next = nullptr;
+       p->prev = last;
+       last->next = p;
+       last = p;
+   }
+}
+node* get_first(){return first;}
+
+void display(node *p)
+{
+    while(p!=nullptr)
+    {
+        cout << p->data << endl;
+        p = p->next;
+    }
+}
+
+void insert_first(node *p,int x)
+{
+    node *t;
+    t= new node;
+    t->prev = nullptr;
+    t->data = x;
+    t->next = first;
+    first = t;
+}
+void insert_last(node *p,int x)
+{
+    node *t;
+    t= new node;
+    t->prev = nullptr;
+    t->data = x;
+    t->next = nullptr;
+    if(p==nullptr)
+    {
+        p=last=t;
+    }
+    else
+    {
+        last->next = t;
+        last = t;
+    }
+
+}
+void inser_at_any(node *p,int pos,int x)
+{
+    if(pos==0)
+    {
+       node *t;
+    t= new node;
+    t->prev = nullptr;
+    t->data = x;
+    t->next = first;
+    first = t;
+    }
+    else
+    {
+        for(int i=1;i<pos-1&&p!=nullptr;i++)
+        {
+            p = p->next;
+        }
+        if(p!=nullptr)
+         {
+                node *t;
+            t= new node;
+            t->prev = nullptr;
+            t->data = x;
+            t->next = p->next;
+            p->next = t;
+         }
+    }
+}
+};
+
+int main()
+{   linkedlist l;
+    int a[]{2,3,4,5,6};
+    l.create(a,5);
+    l.display(l.get_first());
+    cout << "insert first: " << endl;
+    l.insert_first(l.get_first(),1);
+    l.display(l.get_first());
+    cout << "insert last: " << endl;
+    l.insert_last(l.get_first(),7);
+    l.display(l.get_first());
+    cout << "insert at any: " << endl;
+    l.inser_at_any(l.get_first(),8,10);
+    l.display(l.get_first());
+
+    return 0;
+}

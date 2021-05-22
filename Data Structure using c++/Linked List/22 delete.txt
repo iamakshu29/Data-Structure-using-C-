@@ -1,0 +1,110 @@
+#include<iostream>
+
+using namespace std;
+
+class node
+{
+public:
+    int data;
+    node *next;
+
+};
+
+class Linkedlist
+{
+private:
+    node *first;
+    node *last;
+
+public:
+    Linkedlist()
+    {
+        first = nullptr;
+        last = nullptr;
+
+    }
+
+    node* get_first(){return first;}
+
+    void create(int a[],int n)
+    {
+        node *t;
+        first = new node;
+        first->data = a[0];
+        first->next = nullptr;
+        last = first;
+        for(int i=1;i<n;i++)
+        {
+            t = new node;
+            t->data = a[i];
+            t->next = nullptr;
+            last->next = t;
+            last = t;
+        }
+    }
+
+    void display(node *p)
+    {
+       int count{0},sum{0},max{0};
+        while(p!=nullptr)
+        {
+            cout << p->data << endl;
+            sum = sum + p->data;
+            count ++;
+            if(max < p->data)
+            {
+                max = p->data;
+            }
+            p = p->next;
+
+        }
+        cout << "count is : "<< count <<endl;
+        cout << "sum is : " << sum << endl;
+        cout << "max element is : " << max << endl;
+    }
+
+    void Delete()
+    {
+        int x =-1;
+        int pos;
+        cout << "enter the position of the node of which element you want to deleted: " << endl;
+        cin >> pos;
+        node *p = first;
+        node *q = nullptr;
+        if(pos==1)
+        {
+            q=first;
+        x = first->data;
+        first = first->next;
+        cout << "deleted element is : " << x << endl;
+        free(q);
+        }
+        else
+        {
+            for(int i=1;i<pos;i++)
+        {
+            q=p;
+            p=p->next;
+        }
+        x = p->data;
+        q->next = p->next;
+        cout << "deleted element is : " << x << endl;
+        free(p);
+        }
+
+    }
+};
+
+int main()
+{
+
+    Linkedlist l;
+    int a[]{12,13,14,20,17};
+    l.create(a,5);
+    l.display(l.get_first());
+    l.Delete();
+    l.display(l.get_first());
+
+
+    return 0;
+}

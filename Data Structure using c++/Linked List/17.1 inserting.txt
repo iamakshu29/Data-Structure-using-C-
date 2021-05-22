@@ -1,0 +1,129 @@
+#include<iostream>
+
+using namespace std;
+
+class Node{
+public:
+    int data;
+    Node *next;
+};
+
+class LinkedList{
+private:
+    Node *first;
+    Node *last;
+public:
+    LinkedList()
+    {
+        first = nullptr;
+        last = nullptr;
+    }
+    Node* GET()
+    {
+        return first;
+    }
+    void create(int b[],int n)
+    {
+        Node *t=nullptr;
+        first = new Node;
+        first->data = b[0];
+        first->next = nullptr;
+        last = first;
+
+        for(int i=1;i<=n;i++)
+        {
+            t = new Node;
+            t->data = b[i];
+            t->next = nullptr;
+            last->next = t;
+            last = t;
+        }
+    }
+    void display(Node *p)
+    {
+        cout << "elements are: " << endl;
+        while(p!=nullptr)
+        {
+            cout << p->data << endl;
+            p = p->next;
+        }
+    }
+// insert at first
+    void Insert_first(int ele)
+    {
+        Node *p = nullptr; // first intitialize a pointer to null ie it does not points to anywhere(nullptr)
+        p = new Node; // pointer p points to new node(directly written as Node *p = new Node)
+        p->data = ele;
+        p->next = first;
+        first = p;
+
+    }
+
+    void Insert_at_any(int pos,int ele)
+    {
+        Node *p = first;
+        Node *t;
+        t = new Node;
+        t->data = ele;
+        t->next = nullptr;
+
+        for(int i=1;i<pos-1;i++) //if u put i=0 then ele inserted after the given position not at given position
+        {
+            p = p->next;
+        }
+        t->next = p->next;
+        p->next = t;
+
+    }
+    // the lower code combine both the upper code:-
+    void inser_at_any_2(int pos,int ele)
+    {
+        if (pos==0)
+        {
+             Node *p;
+            p = new Node;
+            p->data = ele;
+            p->next = first;
+            first = p;
+        }
+        else if(pos>0)
+        {
+            Node *p = first;
+
+
+            for(int i=1;i<pos-1&&p!=nullptr;i++) //if u put i=0 then ele inserted after the given position not at given position:-
+            {
+                p = p->next;
+            }
+            if(p!=nullptr)
+                {
+                    Node *t;
+                    t = new Node;
+                    t->data = ele;
+                    t->next = nullptr;
+                    t->next = p->next;
+                    p->next = t;
+                }
+            else
+                {
+                    cout << "pls enter the correct position: " << endl;
+                }
+        }
+    }
+};
+
+int main(){
+    LinkedList a;
+    int b[]{1,2,3,4,5,6};
+    a.create(b,5);
+    a.display(a.GET());
+//    a.Insert_first(20);
+//    a.Insert_first(30);
+//    a.display(a.GET());
+    a.Insert_at_any(3,100);
+    a.display(a.GET());
+    a.inser_at_any_2(0,1000);
+    a.display(a.GET());
+
+return 0;
+}

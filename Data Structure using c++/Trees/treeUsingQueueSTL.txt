@@ -1,0 +1,167 @@
+#include<bits/stdc++.h>
+#include<queue>
+using namespace std;
+
+
+
+class node {
+public:
+	node *left;
+	node *right;
+	int data;
+};
+class Tree {
+private:
+	node *root;
+public:
+	queue <node*> q;
+	Tree()
+	{
+		root = nullptr;
+	}
+
+	void create()
+	{
+		node *p = nullptr;
+		node *t = nullptr;
+		root = new node;
+		int x;
+		cin >> x;
+		root->data = x;
+		root->left = root->right = nullptr;
+		q.push(root);
+
+		while (q.size() != 0)
+		{
+			p = q.front();
+			q.pop();
+
+			cin >> x;
+			if (x != -1)
+			{
+				t = new node;
+				t->data = x;
+				t->left = t->right = nullptr;
+				p->left = t;
+				q.push(t);
+			}
+
+			cin >> x;
+			if (x != -1)
+			{
+				t = new node;
+				t->data = x;
+				t->left = t->right = nullptr;
+				p->right = t;
+				q.push(t);
+			}
+		}
+
+	}
+
+	node* get()
+	{
+		return root;
+	}
+
+	void preOrder(node *p)
+	{
+		if (p)
+		{
+			cout << p->data << " ";
+			preOrder(p->left);
+			preOrder(p->right);
+		}
+	}
+
+	void levelOrder(node *p)
+	{
+		cout << p->data << " " ;
+		q.push(p);
+		while (q.size() != 0)
+		{
+			p = q.front();
+			q.pop();
+			if (p->left) {
+				cout << p->left->data << " ";
+				q.push(p->left);
+			}
+			if (p->right) {
+				cout << p->right->data << " ";
+				q.push(p->right);
+			}
+
+		}
+
+	}
+
+	int height(node *p)
+	{
+		int x = 0, y = 0;
+
+		if (p == 0)
+			return 0;
+		else
+		{
+			x = height(p->left);
+			y = height(p->right);
+		}
+		if (x > y)
+			return x + 1;
+		else
+			return y + 1;
+	}
+
+	int count(node *p)
+	{
+		int x{0}, y{0};
+		if (p)
+		{
+			x = count(p->left);
+			y = count(p->right);
+			return x + y + 1;
+		}
+		return 0;
+	}
+
+
+	void postOrder(node *p)
+	{
+		if (p)
+		{
+			postOrder(p->left);
+			postOrder(p->right);
+			cout << p->data << " ";
+		}
+	}
+};
+
+
+int main()
+{
+#ifndef ONLINE_JUDGE
+	// for getting input from input.txt
+	freopen("input.txt", "r", stdin);
+	// for writing output to output.txt
+	freopen("output.txt", "w", stdout);
+#endif
+
+
+	Tree t;
+	t.create();
+	t.preOrder(t.get());
+	cout << endl;
+	t.postOrder(t.get());
+	cout << endl;
+	t.levelOrder(t.get());
+	cout << endl;
+	cout << t.height(t.get()) << endl;
+	cout << t.count(t.get());
+
+	return 0;
+}
+
+INPUT
+10 20 30 40 50 60 70 -1 -1 -1 -1 -1 -1 -1 -1 
+
+
