@@ -1,6 +1,6 @@
 # Data-Structure-using-C-
 Here you can get the .txt file of C++ programs of Data Structure..
-Just copy and paste the code to your text editorand the program runs fine 
+Just copy and paste the code to your text editor and the program runs fine 
 
 
 SOME PROGRAMS INCLUDE THIS TYPE OF FILE
